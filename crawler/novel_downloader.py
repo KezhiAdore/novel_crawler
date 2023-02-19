@@ -57,7 +57,7 @@ class NovelDownloader:
         # 解析目录，下载每一页文件
         chapter_urls = self.get_chapter_urls(url)
         self._chapter_count = len(chapter_urls)
-        with ThreadPoolExecutor(64) as pool:
+        with ThreadPoolExecutor(128) as pool:
             results = pool.map(self.download_chapter,chapter_urls)
         self._novel = self._novel.join(results)
     
@@ -68,7 +68,12 @@ class NovelDownloader:
         chapter_urls = rp.xpath("//dd/a/@href")
         chapter_urls = [urljoin(url, u) for u in chapter_urls]
         
-        next_url = rp.xpath("//a[text()='下一页']/@href")[0]
+        next_url = rp.xpath("//a[text()='下一页']/@href")
+        if next_url:
+            next_url = next_url[0]
+        else:
+            return chapter_urls
+        
         if "/" not in next_url:
             return []
         else:
@@ -121,7 +126,7 @@ class NovelDownloader:
             return "完本"
     
     def _trans_update_time(self, s:str) -> str:
-        res = re.search("(?<=（)(.+)(?=）)",s)
+        res = re.search("(?<=（)(.+)(?=）)",s[-19:])
         if not res:
             raise ValueError(s)
         s = res.group()

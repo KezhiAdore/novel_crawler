@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 base_url = "https://www.bbiquge.net/book/"
-data_dir = "C:/Users/kezhi/Desktop/data"
+data_dir = "data"
 novel_dir = os.path.join(data_dir, "novel")
 novel_data_file = os.path.join(data_dir, "novel_data.csv")
 columns = [
@@ -41,7 +41,7 @@ init()
 df = pd.read_csv(novel_data_file,index_col=0)
 
 # 根据笔趣阁书的编号逐一遍历并保存
-for book_id in range(10000):
+for book_id in range(50000,50002):
     # 重置小说下载器
     novel_dl.reset()
     # 构建小说页面链接
@@ -64,14 +64,14 @@ for book_id in range(10000):
     
     # 获取小说元信息
     novel_dl.get_novel(book_url)
-    novel_filepath = df.loc[book_id, "novel_filepath"]
-    novel_dl.save_novel(novel_filepath)
     novel_info = novel_dl.metadata()
+    novel_filepath = os.path.join(novel_dir,novel_info["book"]+".txt")
+    novel_dl.save_novel(novel_filepath)
     novel_info["id"] = book_id
     novel_info["novel_filepath"] = novel_filepath
     
     print(novel_info)
     
-    info_row = pd.DataFrame(novel_info)
+    info_row = pd.DataFrame(novel_info, index=[novel_info["id"]])
     df = pd.concat([df, info_row])
     df.to_csv(novel_data_file)
