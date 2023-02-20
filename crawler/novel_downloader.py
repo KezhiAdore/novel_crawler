@@ -84,12 +84,12 @@ class NovelDownloader:
         r = self._client.get(url)
         rp = etree.HTML(r.text)
         # 解析页面
-        header = rp.xpath("//h1/text()")[0]+'\n'
+        header = rp.xpath("//h1/text()")[0]
         content = rp.xpath("string(//div[@id='content'])")
         content = re.sub("笔趣阁(.+)章节！","",content) # 去除广告
         content = re.sub("\xa0+", "\n    ", content)    # 替换空白符
         print("{} 下载完毕".format(header))
-        return header+content
+        return '\n'+header+'\n'+content
 
     def metadata(self) -> dict:
         assert self._metadata, "获取Metadata前先调用函数`get_novel`获取小说"
