@@ -38,7 +38,7 @@ class NovelDownloader:
         update_info = rp.xpath("string(//div[@class='update'])")
         last_update_time = self._trans_update_time(update_info)
         self._metadata = {
-            "book": book,
+            "book": self._valid_book(book),
             "author": author,
             "category": category,
             "popularity": popularity,
@@ -132,3 +132,8 @@ class NovelDownloader:
         s = res.group()
         tf = "%Y-%m-%d %H:%M"
         return datetime.datetime.strptime(s,tf)
+    
+    def _valid_book(self, s:str):
+        for i, j in ("/／","\\＼","?？","|︱","\"＂","*＊","<＜",">＞"):
+            s = s.replace(i,j)
+        return s
