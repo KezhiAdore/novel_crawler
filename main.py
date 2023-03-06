@@ -51,7 +51,7 @@ init()
 df = pd.read_csv(novel_data_file,index_col=0)
 
 # 根据笔趣阁书的编号逐一遍历并保存
-for book_id in range(130000):
+for book_id in range(args.start, args.end):
     # 重置小说下载器
     novel_dl.reset()
     # 构建小说页面链接
