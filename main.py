@@ -1,11 +1,11 @@
 from crawler import *
 import pandas as pd
 import os
+import argparse
 
 base_url = "https://www.bbiquge.net/book/"
 data_dir = "data"
 novel_dir = os.path.join(data_dir, "novel")
-novel_data_file = os.path.join(data_dir, "novel_data.csv")
 columns = [
     "id",
     "book",
@@ -20,6 +20,16 @@ columns = [
     "novel_filepath",
 ]
 
+parser = argparse.ArgumentParser(description='Process some integers.')
+# 添加参数步骤
+parser.add_argument('--df_id', type=int, default=0, help='df index')
+parser.add_argument('--start', type=int, default=0, help='the first book id')
+parser.add_argument("--end", type=int, default=130000, help="the last book id")
+
+# 解析参数步骤  
+args = parser.parse_args()
+
+novel_data_file = os.path.join(data_dir, f"novel_data_{args.df_id}.csv")
 
 novel_dl = NovelDownloader(client)
 

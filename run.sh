@@ -1,0 +1,13 @@
+python main.py --df_id 0 --start 0 --end 10000
+python main.py --df_id 1 --start 10000 --end 20000
+python main.py --df_id 2 --start 20000 --end 30000
+python main.py --df_id 3 --start 30000 --end 40000
+python main.py --df_id 4 --start 40000 --end 50000
+python main.py --df_id 5 --start 50000 --end 60000
+python main.py --df_id 6 --start 60000 --end 70000
+python main.py --df_id 7 --start 70000 --end 80000
+python main.py --df_id 8 --start 80000 --end 90000
+python main.py --df_id 9 --start 90000 --end 100000
+python main.py --df_id 10 --start 100000 --end 110000
+python main.py --df_id 11 --start 110000 --end 120000
+python main.py --df_id 12 --start 120000 --end 130000
